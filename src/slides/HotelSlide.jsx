@@ -131,14 +131,15 @@ const HotelSlide = ({ onNext, onBack }) => {
                                     border: selectedHotel?.id === hotel.id ? '2px solid var(--primary)' : 'none',
                                     position: 'relative',
                                     transition: 'transform 0.2s',
+                                    display: 'flex',
+                                    flexDirection: 'column'
                                 }}
-                                onClick={() => handleHotelClick(hotel)}
                             >
                                 <div style={{ height: '200px', overflow: 'hidden', position: 'relative' }}>
                                     <img
                                         src={hotel.image}
                                         alt={hotel.name}
-                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'zoom-in' }}
                                         onClick={(e) => openZoom(hotel.image, e)}
                                     />
                                     {selectedHotel?.id === hotel.id && (
@@ -152,7 +153,7 @@ const HotelSlide = ({ onNext, onBack }) => {
                                         </div>
                                     )}
                                 </div>
-                                <div style={{ padding: '1.5rem' }}>
+                                <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
                                         <h3 style={{ fontWeight: '700', fontSize: '1.1rem' }}>{hotel.name}</h3>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', color: '#fbbf24' }}>
@@ -171,16 +172,28 @@ const HotelSlide = ({ onNext, onBack }) => {
                                         ))}
                                         {hotel.amenities.length > 3 && <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>+{hotel.amenities.length - 3}</span>}
                                     </div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', marginBottom: '1rem' }}>
-                                        <span style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--primary)' }}>€{hotel.price}</span>
-                                        <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>pro Nacht</span>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', marginBottom: '1.5rem' }}>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <span style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--primary)' }}>€{hotel.price}</span>
+                                            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>pro Nacht</span>
+                                        </div>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleHotelClick(hotel);
+                                            }}
+                                            className="btn btn-secondary"
+                                            style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                                        >
+                                            Details
+                                        </button>
                                     </div>
                                     <button
-                                        onClick={(e) => { e.stopPropagation(); handleSelectHotel(hotel); }}
-                                        className={`btn ${selectedHotel?.id === hotel.id ? 'btn-secondary' : 'btn-primary'} `}
-                                        style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', fontWeight: '600' }}
+                                        onClick={() => handleSelectHotel(hotel)}
+                                        className={`btn ${selectedHotel?.id === hotel.id ? 'btn-secondary' : 'btn-primary'}`}
+                                        style={{ width: '100%', padding: '0.75rem', fontWeight: '700' }}
                                     >
-                                        {selectedHotel?.id === hotel.id ? 'Ausgewählt' : 'Hotel Buchen'}
+                                        {selectedHotel?.id === hotel.id ? 'Ausgewählt' : 'Hotel buchen'}
                                     </button>
                                 </div>
                             </div>

@@ -20,7 +20,7 @@ export const TripProvider = ({ children }) => {
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [itinerary, setItinerary] = useState([]); // Array of { day, activities: [] }
   const [passengers, setPassengers] = useState([]);
-  const [paymentInfo, setPaymentInfo] = useState({ method: null, details: null });
+  const [paymentInfo, setPaymentInfo] = useState({ method: null, details: {} });
 
   // Standalone bookings (independent of trip)
   const [standaloneTransports, setStandaloneTransports] = useState([]);

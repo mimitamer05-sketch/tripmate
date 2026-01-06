@@ -376,8 +376,8 @@ const MapSlide = ({ onNext, onBack }) => {
                                             </button>
                                             <button
                                                 onClick={() => handleAddActivity(activity)}
-                                                className="btn btn-secondary"
-                                                style={{ width: '100%', padding: '0.4rem', fontSize: '0.75rem', fontWeight: '500' }}
+                                                className="btn btn-primary"
+                                                style={{ width: '100%', padding: '0.5rem', fontSize: '0.8rem' }}
                                             >
                                                 Hinzufügen
                                             </button>
@@ -408,10 +408,10 @@ const MapSlide = ({ onNext, onBack }) => {
                                             <span style={{ fontWeight: '700', color: 'var(--primary)' }}>{activity.price === 0 ? 'Kostenlos' : `€${activity.price}`}</span>
                                             <button
                                                 onClick={() => handleAddActivity(activity)}
-                                                className="btn btn-secondary"
-                                                style={{ padding: '0.4rem 0.8rem', fontSize: '0.8rem', fontWeight: '500' }}
+                                                className="btn btn-primary"
+                                                style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
                                             >
-                                                <Plus size={14} /> Hinzufügen
+                                                <Plus size={16} /> Hinzufügen
                                             </button>
                                         </div>
                                     </div>

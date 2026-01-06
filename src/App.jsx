@@ -53,7 +53,14 @@ const MainLayout = () => {
   return (
     <div className="app-container">
       <header className="app-header">
-        <h1 className="app-logo" onClick={() => { setActiveTab('home'); setCurrentSlide(0); }} style={{ cursor: 'pointer' }}>
+        <h1
+          className="app-logo"
+          onClick={() => {
+            setActiveTab('home');
+            setCurrentSlide(0);
+          }}
+          style={{ cursor: 'pointer' }}
+        >
           <span className="logo-trip">Trip</span>
           <span className="logo-mate">Mate</span>
         </h1>

@@ -392,17 +392,29 @@ const GlobalSearchSlide = () => {
                                             onClick={handleBookingSubmit} // Submit Activity Only
                                             disabled={!bookingData.date}
                                             className="btn btn-secondary"
-                                            style={{ padding: '0.6rem 1rem', borderRadius: '12px', fontWeight: '500', fontSize: '0.85rem', opacity: !bookingData.date ? 0.5 : 1 }}
+                                            style={{ padding: '1rem', borderRadius: '16px', fontWeight: '600', opacity: !bookingData.date ? 0.5 : 1 }}
                                         >
                                             Nur Aktivität
                                         </button>
                                         <button
                                             onClick={() => setBookingStep(2)}
                                             disabled={!bookingData.date}
-                                            className="btn btn-primary"
-                                            style={{ padding: '1rem', borderRadius: '16px', fontWeight: '700', opacity: !bookingData.date ? 0.5 : 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}
+                                            className="btn btn-secondary"
+                                            style={{
+                                                padding: '0.5rem 1rem',
+                                                borderRadius: '12px',
+                                                fontWeight: '600',
+                                                fontSize: '0.85rem',
+                                                opacity: !bookingData.date ? 0.5 : 1,
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                gap: '0.4rem',
+                                                height: 'fit-content',
+                                                alignSelf: 'center'
+                                            }}
                                         >
-                                            Anreise hinzufügen <ArrowRight size={18} />
+                                            Anreise hinzufügen <ArrowRight size={14} />
                                         </button>
                                     </div>
                                 </div>

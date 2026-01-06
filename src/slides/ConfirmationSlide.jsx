@@ -73,16 +73,19 @@ const ConfirmationSlide = () => {
         });
         y += 13;
 
-        // Payment
-        if (paymentInfo && paymentInfo.method) {
+        // Payment Info
+        if (paymentInfo.method) {
             doc.setFontSize(16);
-            doc.text('Zahlung', 20, y);
+            doc.text('Zahlungsinformationen', 20, y);
             y += 10;
             doc.setFontSize(12);
-            const methodName = paymentInfo.method === 'credit_card' ? 'Kreditkarte' :
-                paymentInfo.method === 'paypal' ? 'PayPal' : 'Apple / Google Pay';
-            doc.text(`Zahlungsart: ${methodName}`, 20, y);
-            y += 15;
+            const methodNames = {
+                'credit_card': 'Kreditkarte',
+                'paypal': 'PayPal',
+                'apple_google_pay': 'Apple / Google Pay'
+            };
+            doc.text(`Zahlungsart: ${methodNames[paymentInfo.method] || paymentInfo.method}`, 20, y);
+            y += 20;
         }
 
         // Total
@@ -103,12 +106,29 @@ const ConfirmationSlide = () => {
                 </div>
 
                 <h1 className="slide-title" style={{ marginBottom: '1rem' }}>Buchung erfolgreich!</h1>
-                <p className="slide-subtitle" style={{ marginBottom: '1rem' }}>
+                <p className="slide-subtitle" style={{ marginBottom: '2rem' }}>
                     Vielen Dank für Ihre Buchung bei Tripmate. Ihre Reise nach {tripDetails.destination} wurde bestätigt.
                 </p>
-                {paymentInfo && paymentInfo.method && (
-                    <div style={{ marginBottom: '2rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                        Bezahlt mit: <strong>{paymentInfo.method === 'credit_card' ? 'Kreditkarte' : paymentInfo.method === 'paypal' ? 'PayPal' : 'Apple / Google Pay'}</strong>
+
+                {paymentInfo.method && (
+                    <div style={{
+                        background: '#f8fafc',
+                        padding: '1rem',
+                        borderRadius: '12px',
+                        marginBottom: '2rem',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.5rem',
+                        fontSize: '0.9rem',
+                        color: 'var(--text-muted)',
+                        border: '1px solid var(--border)'
+                    }}>
+                        <span>Bezahlt mit:</span>
+                        <span style={{ fontWeight: '600', color: 'var(--text-main)' }}>
+                            {paymentInfo.method === 'credit_card' ? 'Kreditkarte' :
+                                paymentInfo.method === 'paypal' ? 'PayPal' : 'Apple / Google Pay'}
+                        </span>
                     </div>
                 )}
 
