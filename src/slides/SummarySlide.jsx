@@ -171,7 +171,7 @@ const SummarySlide = ({ onNext, onBack }) => {
                                 className="btn btn-primary"
                                 style={{ width: '100%', opacity: !isFormValid ? 0.5 : 1 }}
                             >
-                                Kostenpflichtig buchen
+                                Weiter zur Zahlung
                             </button>
                         </div>
                     </div>

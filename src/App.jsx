@@ -10,6 +10,7 @@ import ConfirmationSlide from './slides/ConfirmationSlide';
 import MyBookingSlide from './slides/MyBookingSlide';
 import GlobalSearchSlide from './slides/GlobalSearchSlide';
 import TransportSlide from './slides/TransportSlide';
+import PaymentSlide from './slides/PaymentSlide';
 
 import { AlertTriangle, Home, Search, BookOpen, Car } from 'lucide-react';
 
@@ -33,7 +34,8 @@ const MainLayout = () => {
       case 3: return <MapSlide onNext={nextSlide} onBack={prevSlide} />;
       case 4: return <PlannerSlide onNext={nextSlide} onBack={prevSlide} />;
       case 5: return <SummarySlide onNext={nextSlide} onBack={prevSlide} />;
-      case 6: return <ConfirmationSlide />;
+      case 6: return <PaymentSlide onNext={nextSlide} onBack={prevSlide} />;
+      case 7: return <ConfirmationSlide />;
       default: return <SearchSlide onNext={nextSlide} />;
     }
   };
@@ -51,7 +53,7 @@ const MainLayout = () => {
   return (
     <div className="app-container">
       <header className="app-header">
-        <h1 className="app-logo">
+        <h1 className="app-logo" onClick={() => { setActiveTab('home'); setCurrentSlide(0); }} style={{ cursor: 'pointer' }}>
           <span className="logo-trip">Trip</span>
           <span className="logo-mate">Mate</span>
         </h1>

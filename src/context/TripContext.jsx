@@ -20,6 +20,7 @@ export const TripProvider = ({ children }) => {
   const [selectedHotel, setSelectedHotel] = useState(null);
   const [itinerary, setItinerary] = useState([]); // Array of { day, activities: [] }
   const [passengers, setPassengers] = useState([]);
+  const [paymentInfo, setPaymentInfo] = useState({ method: null, details: null });
 
   // Standalone bookings (independent of trip)
   const [standaloneTransports, setStandaloneTransports] = useState([]);
@@ -108,6 +109,7 @@ export const TripProvider = ({ children }) => {
       selectedHotel, setSelectedHotel,
       itinerary, setItinerary, addToItinerary, removeFromItinerary, updateItineraryItem,
       passengers, setPassengers,
+      paymentInfo, setPaymentInfo,
       calculateTotalCost,
       budgetWarning, setBudgetWarning,
       // Standalone bookings

@@ -127,12 +127,12 @@ const HotelSlide = ({ onNext, onBack }) => {
                                 key={hotel.id}
                                 className="card"
                                 style={{
-                                    padding: 0, overflow: 'hidden', cursor: 'pointer',
+                                    padding: 0, overflow: 'hidden',
                                     border: selectedHotel?.id === hotel.id ? '2px solid var(--primary)' : 'none',
                                     position: 'relative',
                                     transition: 'transform 0.2s',
                                 }}
-                                onDoubleClick={() => handleHotelClick(hotel)}
+                                onClick={() => handleHotelClick(hotel)}
                             >
                                 <div style={{ height: '200px', overflow: 'hidden', position: 'relative' }}>
                                     <img
@@ -171,10 +171,17 @@ const HotelSlide = ({ onNext, onBack }) => {
                                         ))}
                                         {hotel.amenities.length > 3 && <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>+{hotel.amenities.length - 3}</span>}
                                     </div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', marginBottom: '1rem' }}>
                                         <span style={{ fontSize: '1.25rem', fontWeight: '700', color: 'var(--primary)' }}>€{hotel.price}</span>
                                         <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>pro Nacht</span>
                                     </div>
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); handleSelectHotel(hotel); }}
+                                        className={`btn ${selectedHotel?.id === hotel.id ? 'btn-secondary' : 'btn-primary'} `}
+                                        style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', fontWeight: '600' }}
+                                    >
+                                        {selectedHotel?.id === hotel.id ? 'Ausgewählt' : 'Hotel Buchen'}
+                                    </button>
                                 </div>
                             </div>
                         ))}

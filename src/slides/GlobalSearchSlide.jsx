@@ -392,7 +392,7 @@ const GlobalSearchSlide = () => {
                                             onClick={handleBookingSubmit} // Submit Activity Only
                                             disabled={!bookingData.date}
                                             className="btn btn-secondary"
-                                            style={{ padding: '1rem', borderRadius: '16px', fontWeight: '600', opacity: !bookingData.date ? 0.5 : 1 }}
+                                            style={{ padding: '0.6rem 1rem', borderRadius: '12px', fontWeight: '500', fontSize: '0.85rem', opacity: !bookingData.date ? 0.5 : 1 }}
                                         >
                                             Nur Aktivität
                                         </button>
