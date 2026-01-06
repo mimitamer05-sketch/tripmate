@@ -394,22 +394,38 @@ const MapSlide = ({ onNext, onBack }) => {
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
                         {viewMode === 'explore' ? (
                             filteredActivities.map(activity => (
-                                <div key={activity.id} className="card" style={{ display: 'flex', gap: '1rem', padding: '1rem' }}>
-                                    <img src={activity.image} alt={activity.name} style={{ width: '100px', height: '100px', objectFit: 'cover', borderRadius: 'var(--radius)' }} />
-                                    <div style={{ flex: 1 }}>
+                                <div key={activity.id} className="card" style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    padding: '0',
+                                    overflow: 'hidden',
+                                    height: '100%',
+                                    minHeight: '400px'
+                                }}>
+                                    <div style={{ height: '200px', width: '100%', overflow: 'hidden' }}>
+                                        <img src={activity.image} alt={activity.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    </div>
+                                    <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
-                                            <h3 style={{ fontWeight: '600' }}>{activity.name}</h3>
-                                            <span style={{ fontSize: '0.8rem', background: 'var(--background)', padding: '0.25rem 0.5rem', borderRadius: '10px' }}>{activity.type}</span>
+                                            <h3 style={{ fontWeight: '700', fontSize: '1.1rem' }}>{activity.name}</h3>
+                                            <span style={{ fontSize: '0.75rem', background: 'var(--background)', padding: '0.25rem 0.75rem', borderRadius: '12px', fontWeight: '600' }}>{activity.type}</span>
                                         </div>
-                                        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginBottom: '0.5rem', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                                        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', flex: 1, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: '1.5' }}>
                                             {activity.description}
                                         </p>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <span style={{ fontWeight: '700', color: 'var(--primary)' }}>{activity.price === 0 ? 'Kostenlos' : `€${activity.price}`}</span>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', paddingTop: '1rem' }}>
+                                            <span style={{
+                                                fontWeight: '700',
+                                                color: activity.price === 0 ? '#10b981' : 'var(--primary)',
+                                                fontSize: '1.1rem',
+                                                textAlign: 'left'
+                                            }}>
+                                                {activity.price === 0 ? 'Kostenlos' : `€${activity.price}`}
+                                            </span>
                                             <button
                                                 onClick={() => handleAddActivity(activity)}
                                                 className="btn btn-primary"
-                                                style={{ padding: '0.5rem 1rem', fontSize: '0.9rem' }}
+                                                style={{ padding: '0.6rem 1.2rem', fontSize: '0.9rem', whiteSpace: 'nowrap' }}
                                             >
                                                 <Plus size={16} /> Hinzufügen
                                             </button>

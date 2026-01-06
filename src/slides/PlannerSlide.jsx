@@ -58,11 +58,11 @@ const PlannerSlide = ({ onNext, onBack }) => {
                                                         </div>
                                                     </div>
 
-                                                    <div style={{ flex: 1, background: 'var(--background)', padding: '1rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)' }}>
+                                                    <div style={{ flex: 1, background: 'var(--background)', padding: '1.25rem', borderRadius: 'var(--radius)', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
                                                             <div>
-                                                                <h4 style={{ fontWeight: '600', marginBottom: '0.25rem' }}>{activity.name}</h4>
-                                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.25rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
+                                                                <h4 style={{ fontWeight: '700', fontSize: '1.05rem', marginBottom: '0.25rem' }}>{activity.name}</h4>
+                                                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
                                                                     <MapPin size={14} />
                                                                     <span>{activity.type}</span>
                                                                 </div>
@@ -75,6 +75,15 @@ const PlannerSlide = ({ onNext, onBack }) => {
                                                             >
                                                                 <Trash2 size={18} />
                                                             </button>
+                                                        </div>
+                                                        <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'flex-start' }}>
+                                                            <span style={{
+                                                                fontWeight: '700',
+                                                                color: activity.price === 0 ? '#10b981' : 'var(--primary)',
+                                                                fontSize: '0.95rem'
+                                                            }}>
+                                                                {activity.price === 0 ? 'Kostenlos' : `€${activity.price}`}
+                                                            </span>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -153,44 +153,54 @@ const FlightSlide = ({ onNext, onBack }) => {
                                 border: (activeTab === 'outbound' ? selectedFlights.outbound?.id : selectedFlights.return?.id) === flight.id
                                     ? '2px solid var(--primary)'
                                     : '1px solid var(--border)',
-                                padding: '1.5rem'
+                                padding: '1.5rem',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '1.5rem',
+                                minHeight: '140px'
                             }}
                             onClick={() => handleFlightSelect(flight, activeTab)}
                         >
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                    <img src={flight.logo} alt={flight.airline} style={{ height: '30px', objectFit: 'contain' }} />
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', minWidth: '200px' }}>
+                                    <div style={{ width: '60px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                        <img
+                                            src={flight.logo}
+                                            alt={flight.airline}
+                                            style={{ maxHeight: '100%', maxWidth: '100%', objectFit: 'contain' }}
+                                        />
+                                    </div>
                                     <div>
-                                        <div style={{ fontWeight: '600', fontSize: '1.1rem' }}>{flight.airline}</div>
-                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{flight.flightNumber}</div>
+                                        <div style={{ fontWeight: '700', fontSize: '1.1rem' }}>{flight.airline}</div>
+                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{flight.flightNumber}</div>
                                     </div>
                                 </div>
 
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flex: 1, justifyContent: 'center', minWidth: '300px' }}>
                                     <div style={{ textAlign: 'center' }}>
-                                        <div style={{ fontSize: '1.5rem', fontWeight: '700' }}>{flight.departureTime}</div>
-                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{flight.origin}</div>
+                                        <div style={{ fontSize: '1.4rem', fontWeight: '700' }}>{flight.departureTime}</div>
+                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '600' }}>{flight.origin}</div>
                                     </div>
 
-                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
-                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{flight.duration}</div>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                                            <div style={{ width: '60px', height: '2px', background: 'var(--border)' }}></div>
-                                            <Plane size={16} style={{ color: 'var(--primary)' }} />
-                                            <div style={{ width: '60px', height: '2px', background: 'var(--border)' }}></div>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem', flex: 1, maxWidth: '150px' }}>
+                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', fontWeight: '600' }}>{flight.duration}</div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%' }}>
+                                            <div style={{ flex: 1, height: '1px', background: 'var(--border)' }}></div>
+                                            <Plane size={14} style={{ color: 'var(--primary)' }} />
+                                            <div style={{ flex: 1, height: '1px', background: 'var(--border)' }}></div>
                                         </div>
-                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{flight.type}</div>
+                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem' }}>{flight.type}</div>
                                     </div>
 
                                     <div style={{ textAlign: 'center' }}>
-                                        <div style={{ fontSize: '1.5rem', fontWeight: '700' }}>{flight.arrivalTime}</div>
-                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{flight.destination}</div>
+                                        <div style={{ fontSize: '1.4rem', fontWeight: '700' }}>{flight.arrivalTime}</div>
+                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', fontWeight: '600' }}>{flight.destination}</div>
                                     </div>
                                 </div>
 
-                                <div style={{ textAlign: 'right' }}>
-                                    <div style={{ fontSize: '1.8rem', fontWeight: '700', color: 'var(--primary)' }}>€{flight.price}</div>
-                                    <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>pro Person</div>
+                                <div style={{ textAlign: 'right', minWidth: '120px' }}>
+                                    <div style={{ fontSize: '1.6rem', fontWeight: '800', color: 'var(--primary)' }}>€{flight.price}</div>
+                                    <div style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>pro Person</div>
                                 </div>
                             </div>
                         </div>
