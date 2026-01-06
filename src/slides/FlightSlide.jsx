@@ -1,0 +1,484 @@
+import React, { useState, useMemo } from 'react';
+import { useTrip } from '../context/TripContext';
+import { flights } from '../data/flights';
+import { Plane, Clock, ArrowRight, X } from 'lucide-react';
+
+const FlightSlide = ({ onNext, onBack }) => {
+    const { tripDetails, selectedFlights, setSelectedFlights } = useTrip();
+    const [viewingFlight, setViewingFlight] = useState(null);
+    const [selectedBaggage, setSelectedBaggage] = useState('none');
+    const [selectedSeatOption, setSelectedSeatOption] = useState('none');
+    const [selectedSeatPosition, setSelectedSeatPosition] = useState(null);
+    const [activeTab, setActiveTab] = useState('outbound');
+
+    const availableFlights = flights.filter(f =>
+        f.origin === tripDetails.origin && f.destination === tripDetails.destination
+    );
+
+    const returnFlights = flights.filter(f =>
+        f.origin === tripDetails.destination && f.destination === tripDetails.origin
+    );
+
+    const baggageOptions = [
+        { id: 'none', label: 'Nur Handgepäck', price: 0 },
+        { id: 'checked', label: '1 Aufgabegepäck (23kg)', price: 30 },
+        { id: 'extra', label: '2 Aufgabegepäck (2x23kg)', price: 60 }
+    ];
+
+    const seatOptions = [
+        { id: 'none', label: 'Keine Sitzplatzreservierung (zufällige Zuweisung)', price: 0 },
+        { id: 'standard', label: 'Standard Sitzplatz', price: 10 },
+        { id: 'extraLegroom', label: 'Extra Beinfreiheit', price: 25 }
+    ];
+
+    const handleFlightSelect = (flight, type) => {
+        setViewingFlight({ ...flight, type });
+        setSelectedBaggage('none');
+        setSelectedSeatOption('none');
+        setSelectedSeatPosition(null);
+    };
+
+    // Generate seat map using useMemo
+    const seats = useMemo(() => {
+        if (!viewingFlight) return [];
+
+        const rows = 20;
+        const seatsPerRow = 6;
+        const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+        const seatMap = [];
+
+        for (let row = 1; row <= rows; row++) {
+            const rowSeats = [];
+            for (let col = 0; col < seatsPerRow; col++) {
+                const seatId = `${row}${letters[col]}`;
+                rowSeats.push({
+                    id: seatId,
+                    row,
+                    letter: letters[col],
+                    // eslint-disable-next-line react-hooks/purity
+                    isOccupied: Math.random() > 0.7
+                });
+            }
+            seatMap.push(rowSeats);
+        }
+        return seatMap;
+    }, [viewingFlight]);
+
+    const handleSeatSelection = (seat) => {
+        if (!seat.isOccupied) {
+            setSelectedSeatPosition(seat.id);
+        }
+    };
+
+    const handleConfirmFlight = () => {
+        const baggagePrice = baggageOptions.find(b => b.id === selectedBaggage)?.price || 0;
+        const seatPrice = seatOptions.find(s => s.id === selectedSeatOption)?.price || 0;
+        const flightWithExtras = {
+            ...viewingFlight,
+            price: viewingFlight.price + baggagePrice + seatPrice,
+            baggage: selectedBaggage,
+            seatOption: selectedSeatOption,
+            seat: selectedSeatPosition
+        };
+
+        if (viewingFlight.type === 'outbound') {
+            setSelectedFlights(prev => ({ ...prev, outbound: flightWithExtras }));
+        } else {
+            setSelectedFlights(prev => ({ ...prev, return: flightWithExtras }));
+        }
+
+        setViewingFlight(null);
+    };
+
+    const handleNext = () => {
+        if (selectedFlights.outbound && selectedFlights.return) {
+            onNext();
+        }
+    };
+
+    return (
+        <div className="slide-container">
+            <div className="slide-header">
+                <h2 className="slide-title">Flüge auswählen</h2>
+                <p className="slide-subtitle">
+                    {tripDetails.origin} → {tripDetails.destination}
+                </p>
+            </div>
+
+            <div className="slide-content">
+                {/* Tab Navigation */}
+                <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
+                    <button
+                        onClick={() => setActiveTab('outbound')}
+                        style={{
+                            padding: '1rem 2rem',
+                            background: activeTab === 'outbound' ? 'var(--primary)' : 'white',
+                            border: '1px solid var(--border)',
+                            borderRadius: 'var(--radius)',
+                            color: activeTab === 'outbound' ? 'white' : 'var(--text)',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            boxShadow: activeTab === 'outbound' ? 'var(--shadow-sm)' : 'none'
+                        }}
+                    >
+                        Hinflug {selectedFlights.outbound && '✓'}
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('return')}
+                        style={{
+                            padding: '1rem 2rem',
+                            background: activeTab === 'return' ? 'var(--primary)' : 'white',
+                            border: '1px solid var(--border)',
+                            borderRadius: 'var(--radius)',
+                            color: activeTab === 'return' ? 'white' : 'var(--text)',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            boxShadow: activeTab === 'return' ? 'var(--shadow-sm)' : 'none'
+                        }}
+                    >
+                        Rückflug {selectedFlights.return && '✓'}
+                    </button>
+                </div>
+
+                {/* Flight List */}
+                <div style={{ display: 'grid', gap: '1rem' }}>
+                    {(activeTab === 'outbound' ? availableFlights : returnFlights).map(flight => (
+                        <div
+                            key={flight.id}
+                            className="card"
+                            style={{
+                                cursor: 'pointer',
+                                border: (activeTab === 'outbound' ? selectedFlights.outbound?.id : selectedFlights.return?.id) === flight.id
+                                    ? '2px solid var(--primary)'
+                                    : '1px solid var(--border)',
+                                padding: '1.5rem'
+                            }}
+                            onClick={() => handleFlightSelect(flight, activeTab)}
+                        >
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                    <img src={flight.logo} alt={flight.airline} style={{ height: '30px', objectFit: 'contain' }} />
+                                    <div>
+                                        <div style={{ fontWeight: '600', fontSize: '1.1rem' }}>{flight.airline}</div>
+                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{flight.flightNumber}</div>
+                                    </div>
+                                </div>
+
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+                                    <div style={{ textAlign: 'center' }}>
+                                        <div style={{ fontSize: '1.5rem', fontWeight: '700' }}>{flight.departureTime}</div>
+                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{flight.origin}</div>
+                                    </div>
+
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{flight.duration}</div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            <div style={{ width: '60px', height: '2px', background: 'var(--border)' }}></div>
+                                            <Plane size={16} style={{ color: 'var(--primary)' }} />
+                                            <div style={{ width: '60px', height: '2px', background: 'var(--border)' }}></div>
+                                        </div>
+                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>{flight.type}</div>
+                                    </div>
+
+                                    <div style={{ textAlign: 'center' }}>
+                                        <div style={{ fontSize: '1.5rem', fontWeight: '700' }}>{flight.arrivalTime}</div>
+                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{flight.destination}</div>
+                                    </div>
+                                </div>
+
+                                <div style={{ textAlign: 'right' }}>
+                                    <div style={{ fontSize: '1.8rem', fontWeight: '700', color: 'var(--primary)' }}>€{flight.price}</div>
+                                    <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>pro Person</div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* Flight Details Modal */}
+            {viewingFlight && (
+                <div style={{
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    background: 'rgba(0, 0, 0, 0.5)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: 1000,
+                    padding: '2rem'
+                }}>
+                    <div style={{
+                        background: 'white',
+                        borderRadius: 'var(--radius)',
+                        maxWidth: '800px',
+                        width: '100%',
+                        maxHeight: '90vh',
+                        overflow: 'auto',
+                        padding: '2rem'
+                    }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                            <h3 style={{ fontSize: '1.5rem', fontWeight: '700' }}>Flugdetails</h3>
+                            <button
+                                onClick={() => setViewingFlight(null)}
+                                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0.5rem' }}
+                            >
+                                <X size={24} />
+                            </button>
+                        </div>
+
+                        {/* Flight Route Visualization */}
+                        <div style={{ marginBottom: '2rem', padding: '1.5rem', background: 'var(--background)', borderRadius: 'var(--radius)' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <div style={{ textAlign: 'center' }}>
+                                    <div style={{ fontSize: '2rem', fontWeight: '700' }}>{viewingFlight.departureTime}</div>
+                                    <div style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>{viewingFlight.origin}</div>
+                                </div>
+
+                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', margin: '0 2rem' }}>
+                                    <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>{viewingFlight.duration}</div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', width: '100%' }}>
+                                        <div style={{ flex: 1, height: '2px', background: 'var(--primary)' }}></div>
+                                        <Plane size={20} style={{ color: 'var(--primary)' }} />
+                                        <div style={{ flex: 1, height: '2px', background: 'var(--primary)' }}></div>
+                                    </div>
+                                    {viewingFlight.type === '1 Stop' && viewingFlight.stops && (
+                                        <div style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textAlign: 'center' }}>
+                                            via {viewingFlight.stops[0].airport}
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div style={{ textAlign: 'center' }}>
+                                    <div style={{ fontSize: '2rem', fontWeight: '700' }}>{viewingFlight.arrivalTime}</div>
+                                    <div style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>{viewingFlight.destination}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Baggage Selection */}
+                        <div style={{ marginBottom: '2rem' }}>
+                            <h4 style={{ marginBottom: '1rem', fontWeight: '600' }}>Gepäck auswählen</h4>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                {baggageOptions.map(option => (
+                                    <label
+                                        key={option.id}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            padding: '1rem',
+                                            border: selectedBaggage === option.id ? '2px solid var(--primary)' : '1px solid var(--border)',
+                                            borderRadius: 'var(--radius)',
+                                            cursor: 'pointer',
+                                            background: selectedBaggage === option.id ? 'rgba(0, 102, 204, 0.05)' : 'white'
+                                        }}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="baggage"
+                                            value={option.id}
+                                            checked={selectedBaggage === option.id}
+                                            onChange={(e) => setSelectedBaggage(e.target.value)}
+                                            style={{ marginRight: '1rem' }}
+                                        />
+                                        <span style={{ flex: 1 }}>{option.label}</span>
+                                        <span style={{ fontWeight: '600' }}>
+                                            {option.price === 0 ? 'Inklusive' : `+€${option.price}`}
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Seat Selection */}
+                        <div style={{ marginBottom: '2rem' }}>
+                            <h4 style={{ marginBottom: '1rem', fontWeight: '600' }}>
+                                Sitzplatz auswählen {selectedSeatPosition && `(${selectedSeatPosition})`}
+                            </h4>
+
+                            {/* Seat Option Selection */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '2rem' }}>
+                                {seatOptions.map(option => (
+                                    <label
+                                        key={option.id}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            padding: '1rem',
+                                            border: selectedSeatOption === option.id ? '2px solid var(--primary)' : '1px solid var(--border)',
+                                            borderRadius: 'var(--radius)',
+                                            cursor: 'pointer',
+                                            background: selectedSeatOption === option.id ? 'rgba(0, 102, 204, 0.05)' : 'white'
+                                        }}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="seatOption"
+                                            value={option.id}
+                                            checked={selectedSeatOption === option.id}
+                                            onChange={(e) => {
+                                                setSelectedSeatOption(e.target.value);
+                                                if (e.target.value === 'none') {
+                                                    setSelectedSeatPosition(null);
+                                                }
+                                            }}
+                                            style={{ marginRight: '1rem' }}
+                                        />
+                                        <span style={{ flex: 1 }}>{option.label}</span>
+                                        <span style={{ fontWeight: '600' }}>
+                                            {option.price === 0 ? 'Kostenlos' : `+€${option.price}`}
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
+
+                            {/* Only show seat map if paid option is selected */}
+                            {selectedSeatOption !== 'none' && (
+                                <>
+                                    {/* Legend */}
+                                    <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginBottom: '2rem', fontSize: '0.9rem', fontWeight: '500' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            <div style={{ width: '24px', height: '24px', background: '#10b981', borderRadius: '6px' }}></div>
+                                            <span>Verfügbar</span>
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            <div style={{ width: '24px', height: '24px', background: '#e5e7eb', borderRadius: '6px' }}></div>
+                                            <span>Besetzt</span>
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                            <div style={{ width: '24px', height: '24px', background: '#3b82f6', borderRadius: '6px' }}></div>
+                                            <span>Ausgewählt</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Seat Grid */}
+                                    <div style={{ maxHeight: '400px', overflowY: 'auto', padding: '1rem', display: 'flex', justifyContent: 'center' }}>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                            {seats.map((row, rowIndex) => {
+                                                const midPoint = row.length / 2;
+                                                const leftSide = row.slice(0, midPoint);
+                                                const rightSide = row.slice(midPoint);
+
+                                                return (
+                                                    <div key={rowIndex} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem' }}>
+                                                        {/* Left Side */}
+                                                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                                            {leftSide.map((seat) => (
+                                                                <button
+                                                                    key={seat.id}
+                                                                    onClick={() => handleSeatSelection(seat)}
+                                                                    disabled={seat.isOccupied}
+                                                                    style={{
+                                                                        width: '40px',
+                                                                        height: '40px',
+                                                                        borderRadius: '8px',
+                                                                        display: 'flex',
+                                                                        alignItems: 'center',
+                                                                        justifyContent: 'center',
+                                                                        fontSize: '0.9rem',
+                                                                        fontWeight: '600',
+                                                                        cursor: seat.isOccupied ? 'not-allowed' : 'pointer',
+                                                                        background: seat.isOccupied
+                                                                            ? '#e5e7eb'
+                                                                            : selectedSeatPosition === seat.id
+                                                                                ? '#3b82f6'
+                                                                                : '#10b981',
+                                                                        color: seat.isOccupied ? '#9ca3af' : 'white',
+                                                                        border: 'none',
+                                                                        transition: 'transform 0.1s',
+                                                                        transform: selectedSeatPosition === seat.id ? 'scale(1.05)' : 'scale(1)'
+                                                                    }}
+                                                                    title={seat.isOccupied ? 'Besetzt' : `Sitz ${seat.id}`}
+                                                                >
+                                                                    {seat.letter}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+
+                                                        {/* Row Number (Aisle) */}
+                                                        <div style={{ width: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#9ca3af', fontSize: '0.875rem' }}>
+                                                            {row[0].row}
+                                                        </div>
+
+                                                        {/* Right Side */}
+                                                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                                                            {rightSide.map((seat) => (
+                                                                <button
+                                                                    key={seat.id}
+                                                                    onClick={() => handleSeatSelection(seat)}
+                                                                    disabled={seat.isOccupied}
+                                                                    style={{
+                                                                        width: '40px',
+                                                                        height: '40px',
+                                                                        borderRadius: '8px',
+                                                                        display: 'flex',
+                                                                        alignItems: 'center',
+                                                                        justifyContent: 'center',
+                                                                        fontSize: '0.9rem',
+                                                                        fontWeight: '600',
+                                                                        cursor: seat.isOccupied ? 'not-allowed' : 'pointer',
+                                                                        background: seat.isOccupied
+                                                                            ? '#e5e7eb'
+                                                                            : selectedSeatPosition === seat.id
+                                                                                ? '#3b82f6'
+                                                                                : '#10b981',
+                                                                        color: seat.isOccupied ? '#9ca3af' : 'white',
+                                                                        border: 'none',
+                                                                        transition: 'transform 0.1s',
+                                                                        transform: selectedSeatPosition === seat.id ? 'scale(1.05)' : 'scale(1)'
+                                                                    }}
+                                                                    title={seat.isOccupied ? 'Besetzt' : `Sitz ${seat.id}`}
+                                                                >
+                                                                    {seat.letter}
+                                                                </button>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+                        </div>
+
+                        {/* Confirm Button */}
+                        <button
+                            onClick={handleConfirmFlight}
+                            className="btn btn-primary"
+                            style={{ width: '100%' }}
+                            disabled={selectedSeatOption !== 'none' && !selectedSeatPosition}
+                        >
+                            Flug bestätigen
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Navigation */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '2rem' }}>
+                <button onClick={onBack} className="btn btn-secondary">
+                    Zurück
+                </button>
+                <button
+                    onClick={handleNext}
+                    className="btn btn-primary"
+                    disabled={!selectedFlights.outbound || !selectedFlights.return}
+                    style={{
+                        opacity: (!selectedFlights.outbound || !selectedFlights.return) ? 0.5 : 1,
+                        cursor: (!selectedFlights.outbound || !selectedFlights.return) ? 'not-allowed' : 'pointer'
+                    }}
+                >
+                    Weiter <ArrowRight size={18} />
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default FlightSlide;

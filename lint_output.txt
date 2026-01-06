@@ -1,0 +1,47 @@
+
+> tripmate@1.0.0 lint
+> eslint .
+
+
+/Users/mariamtameragha/Antigravity/tripmate/src/context/TripContext.jsx
+   5:14  error    Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components                     react-refresh/only-export-components
+  85:6   warning  React Hook React.useEffect has missing dependencies: 'budgetWarning' and 'calculateTotalCost'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/mariamtameragha/Antigravity/tripmate/src/data/hotels.js
+  13:9  error  Duplicate key 'coordinates'  no-dupe-keys
+  34:9  error  Duplicate key 'coordinates'  no-dupe-keys
+  55:9  error  Duplicate key 'coordinates'  no-dupe-keys
+  76:9  error  Duplicate key 'coordinates'  no-dupe-keys
+
+/Users/mariamtameragha/Antigravity/tripmate/src/services/GasTransportService.js
+  1:10  error  'addMinutes' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  1:22  error  'format' is defined but never used. Allowed unused vars must match /^[A-Z_]/u      no-unused-vars
+
+/Users/mariamtameragha/Antigravity/tripmate/src/slides/ConfirmationSlide.jsx
+  7:58  error  'itinerary' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/mariamtameragha/Antigravity/tripmate/src/slides/FlightSlide.jsx
+  58:21  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/exhaustive-deps')
+
+/Users/mariamtameragha/Antigravity/tripmate/src/slides/GlobalSearchSlide.jsx
+    7:41  error  'addToItinerary' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      no-unused-vars
+   28:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  26 |     useEffect(() => {
+  27 |         if (tripDetails.destination) {
+> 28 |             setSelectedCity(tripDetails.destination);
+     |             ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  29 |         }
+  30 |     }, [tripDetails.destination]);
+  31 |  react-hooks/set-state-in-effect
+  167:11  error  'handleTransportAction' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               no-unused-vars
+
+✖ 13 problems (11 errors, 2 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+
