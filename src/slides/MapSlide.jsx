@@ -404,7 +404,7 @@ const MapSlide = ({ onNext, onBack }) => {
                 </div>
 
                 {/* Map View - Bottom */}
-                <div style={{ height: '500px', borderRadius: 'var(--radius)', overflow: 'hidden', boxShadow: 'var(--shadow-md)', position: 'relative' }}>
+                <div style={{ height: '350px', borderRadius: 'var(--radius)', overflow: 'hidden', boxShadow: 'var(--shadow-md)', position: 'relative' }}>
                     <MapContainer center={mapCenter} zoom={12} style={{ height: '100%', width: '100%' }}>
                         <MapController center={mapCenter} />
                         <TileLayer
