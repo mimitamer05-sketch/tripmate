@@ -616,7 +616,7 @@ export const flights = [
         destination: 'Tokio',
         price: 1000,
         type: 'Direct',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Japan_Airlines_Logo_%282011%29.svg/200px-Japan_Airlines_Logo_%282011%29.svg.png'
+        logo: '/images/airlines/jal.png'
     },
     {
         id: 63,
@@ -629,7 +629,7 @@ export const flights = [
         destination: 'Tokio',
         price: 980,
         type: 'Direct',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/All_Nippon_Airways_Logo.svg/200px-All_Nippon_Airways_Logo.svg.png'
+        logo: '/images/airlines/ana.png'
     },
     {
         id: 64,
@@ -671,7 +671,7 @@ export const flights = [
         destination: 'Tokio',
         price: 990,
         type: 'Direct',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/All_Nippon_Airways_Logo.svg/200px-All_Nippon_Airways_Logo.svg.png'
+        logo: '/images/airlines/ana.png'
     },
     {
         id: 73,
@@ -699,7 +699,7 @@ export const flights = [
         price: 820,
         type: '1 Stop',
         stops: [{ airport: 'Doha (DOH)', duration: '2h 45m' }],
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Qatar_Airways_Logo.svg/200px-Qatar_Airways_Logo.svg.png'
+        logo: '/images/airlines/qatar.png'
     },
 
     // Berlin to Tokyo
@@ -803,7 +803,7 @@ export const flights = [
         price: 1200,
         type: '1 Stop',
         stops: [{ airport: 'Singapore (SIN)', duration: '2h 30m' }],
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Qantas_Airways_logo_2016.svg/200px-Qantas_Airways_logo_2016.svg.png'
+        logo: '/images/airlines/qantas.png'
     },
     {
         id: 92,
@@ -831,7 +831,7 @@ export const flights = [
         price: 1180,
         type: '1 Stop',
         stops: [{ airport: 'Singapore (SIN)', duration: '2h 00m' }],
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Singapore_Airlines_Logo.svg/200px-Singapore_Airlines_Logo.svg.png'
+        logo: '/images/airlines/singapore.png'
     },
     {
         id: 94,
@@ -845,7 +845,7 @@ export const flights = [
         price: 1100,
         type: '1 Stop',
         stops: [{ airport: 'Doha (DOH)', duration: '2h 15m' }],
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Qatar_Airways_Logo.svg/200px-Qatar_Airways_Logo.svg.png'
+        logo: '/images/airlines/qatar.png'
     },
 
     // München to Sydney
@@ -875,7 +875,7 @@ export const flights = [
         price: 1120,
         type: '1 Stop',
         stops: [{ airport: 'Doha (DOH)', duration: '2h 30m' }],
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Qatar_Airways_Logo.svg/200px-Qatar_Airways_Logo.svg.png'
+        logo: '/images/airlines/qatar.png'
     },
     {
         id: 103,
@@ -889,7 +889,7 @@ export const flights = [
         price: 1190,
         type: '1 Stop',
         stops: [{ airport: 'Singapore (SIN)', duration: '1h 45m' }],
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Singapore_Airlines_Logo.svg/200px-Singapore_Airlines_Logo.svg.png'
+        logo: '/images/airlines/singapore.png'
     },
     {
         id: 104,
@@ -919,7 +919,7 @@ export const flights = [
         price: 1140,
         type: '1 Stop',
         stops: [{ airport: 'Doha (DOH)', duration: '2h 45m' }],
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Qatar_Airways_Logo.svg/200px-Qatar_Airways_Logo.svg.png'
+        logo: '/images/airlines/qatar.png'
     },
     {
         id: 112,
@@ -1295,7 +1295,7 @@ export const flights = [
         destination: 'Tokio',
         price: 950,
         type: 'Direct',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/All_Nippon_Airways_Logo.svg/200px-All_Nippon_Airways_Logo.svg.png'
+        logo: '/images/airlines/ana.png'
     },
     {
         id: 8,
@@ -1308,7 +1308,7 @@ export const flights = [
         destination: 'Tokio',
         price: 980,
         type: 'Direct',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Japan_Airlines_Logo_%282011%29.svg/200px-Japan_Airlines_Logo_%282011%29.svg.png'
+        logo: '/images/airlines/jal.png'
     },
 
     // München to Tokyo
@@ -1323,7 +1323,7 @@ export const flights = [
         destination: 'Tokio',
         price: 970,
         type: 'Direct',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/All_Nippon_Airways_Logo.svg/200px-All_Nippon_Airways_Logo.svg.png'
+        logo: '/images/airlines/ana.png'
     },
 
     // Berlin to Tokyo
@@ -1338,7 +1338,7 @@ export const flights = [
         destination: 'Tokio',
         price: 960,
         type: 'Direct',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Japan_Airlines_Logo_%282011%29.svg/200px-Japan_Airlines_Logo_%282011%29.svg.png'
+        logo: '/images/airlines/jal.png'
     },
 
     // Hamburg to Tokyo
@@ -1383,7 +1383,7 @@ export const flights = [
         destination: 'Sydney',
         price: 1200,
         type: '1 Stop',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Qantas_Airways_logo_2016.svg/200px-Qantas_Airways_logo_2016.svg.png'
+        logo: '/images/airlines/qantas.png'
     },
     {
         id: 10,
@@ -1411,7 +1411,7 @@ export const flights = [
         destination: 'Sydney',
         price: 1220,
         type: '1 Stop',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Qantas_Airways_logo_2016.svg/200px-Qantas_Airways_logo_2016.svg.png'
+        logo: '/images/airlines/qantas.png'
     },
 
     // Berlin to Sydney
@@ -1737,7 +1737,7 @@ export const flights = [
         destination: 'Frankfurt',
         price: 970,
         type: 'Direct',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/All_Nippon_Airways_Logo.svg/200px-All_Nippon_Airways_Logo.svg.png'
+        logo: '/images/airlines/ana.png'
     },
     {
         id: 108,
@@ -1750,7 +1750,7 @@ export const flights = [
         destination: 'Frankfurt',
         price: 990,
         type: 'Direct',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Japan_Airlines_Logo_%282011%29.svg/200px-Japan_Airlines_Logo_%282011%29.svg.png'
+        logo: '/images/airlines/jal.png'
     },
 
     // Tokyo to München
@@ -1765,7 +1765,7 @@ export const flights = [
         destination: 'München',
         price: 980,
         type: 'Direct',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/All_Nippon_Airways_Logo.svg/200px-All_Nippon_Airways_Logo.svg.png'
+        logo: '/images/airlines/ana.png'
     },
 
     // Tokyo to Berlin
@@ -1780,7 +1780,7 @@ export const flights = [
         destination: 'Berlin',
         price: 970,
         type: 'Direct',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Japan_Airlines_Logo_%282011%29.svg/200px-Japan_Airlines_Logo_%282011%29.svg.png'
+        logo: '/images/airlines/jal.png'
     },
 
     // Tokyo to Hamburg
@@ -1825,7 +1825,7 @@ export const flights = [
         destination: 'Frankfurt',
         price: 1220,
         type: '1 Stop',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Qantas_Airways_logo_2016.svg/200px-Qantas_Airways_logo_2016.svg.png'
+        logo: '/images/airlines/qantas.png'
     },
     {
         id: 110,
@@ -1853,7 +1853,7 @@ export const flights = [
         destination: 'München',
         price: 1240,
         type: '1 Stop',
-        logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Qantas_Airways_logo_2016.svg/200px-Qantas_Airways_logo_2016.svg.png'
+        logo: '/images/airlines/qantas.png'
     },
 
     // Sydney to Berlin
