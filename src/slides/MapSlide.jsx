@@ -322,74 +322,7 @@ const MapSlide = ({ onNext, onBack }) => {
             </div>
 
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '1rem', padding: '0 2rem 2rem 2rem', overflow: 'auto' }}>
-                {/* Map View - Top */}
-                <div style={{ height: '500px', borderRadius: 'var(--radius)', overflow: 'hidden', boxShadow: 'var(--shadow-md)', position: 'relative' }}>
-                    <MapContainer center={mapCenter} zoom={12} style={{ height: '100%', width: '100%' }}>
-                        <MapController center={mapCenter} />
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-
-                        {/* Hotel Marker */}
-                        {selectedHotel && selectedHotel.coordinates && (
-                            <Marker position={selectedHotel.coordinates} icon={new L.Icon({
-                                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
-                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-                                iconSize: [25, 41],
-                                iconAnchor: [12, 41],
-                                popupAnchor: [1, -34],
-                                shadowSize: [41, 41]
-                            })}>
-                                <Popup>
-                                    <div className="p-2">
-                                        <h3 className="font-bold text-lg">{selectedHotel.name}</h3>
-                                        <p className="text-sm text-gray-600">Dein Hotel</p>
-                                    </div>
-                                </Popup>
-                            </Marker>
-                        )}
-
-                        {filteredActivities.map(activity => (
-                            <Marker
-                                key={activity.id}
-                                position={[activity.lat, activity.lng]}
-                                eventHandlers={{
-                                    click: () => handleMarkerClick(activity),
-                                }}
-                            >
-                                <Popup>
-                                    <div style={{ width: '200px' }}>
-                                        <h3 style={{ fontWeight: '600', marginBottom: '0.5rem' }}>{activity.name}</h3>
-                                        <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>{activity.description}</p>
-
-                                        <p style={{ fontWeight: '700', color: 'var(--primary)', marginBottom: '0.5rem' }}>
-                                            {activity.price === 0 ? 'Kostenlos' : `€${activity.price}`}
-                                        </p>
-
-                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                            <button
-                                                onClick={() => handleShowRoute(activity)}
-                                                style={{ width: '100%', padding: '0.5rem', fontSize: '0.8rem', background: 'white', border: '1px solid var(--primary)', color: 'var(--primary)', borderRadius: 'var(--radius)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}
-                                            >
-                                                <Navigation size={14} /> Route anzeigen
-                                            </button>
-                                            <button
-                                                onClick={() => handleAddActivity(activity)}
-                                                className="btn btn-primary"
-                                                style={{ width: '100%', padding: '0.5rem', fontSize: '0.8rem' }}
-                                            >
-                                                Hinzufügen
-                                            </button>
-                                        </div>
-                                    </div>
-                                </Popup>
-                            </Marker>
-                        ))}
-                    </MapContainer>
-                </div>
-
-                {/* List View - Bottom 40% */}
+                {/* List View - Top */}
                 <div style={{ flex: 1, overflowY: 'auto', paddingRight: '0.5rem' }}>
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1rem' }}>
                         {viewMode === 'explore' ? (
@@ -468,6 +401,73 @@ const MapSlide = ({ onNext, onBack }) => {
                             )
                         )}
                     </div>
+                </div>
+
+                {/* Map View - Bottom */}
+                <div style={{ height: '500px', borderRadius: 'var(--radius)', overflow: 'hidden', boxShadow: 'var(--shadow-md)', position: 'relative' }}>
+                    <MapContainer center={mapCenter} zoom={12} style={{ height: '100%', width: '100%' }}>
+                        <MapController center={mapCenter} />
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+
+                        {/* Hotel Marker */}
+                        {selectedHotel && selectedHotel.coordinates && (
+                            <Marker position={selectedHotel.coordinates} icon={new L.Icon({
+                                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                                iconSize: [25, 41],
+                                iconAnchor: [12, 41],
+                                popupAnchor: [1, -34],
+                                shadowSize: [41, 41]
+                            })}>
+                                <Popup>
+                                    <div className="p-2">
+                                        <h3 className="font-bold text-lg">{selectedHotel.name}</h3>
+                                        <p className="text-sm text-gray-600">Dein Hotel</p>
+                                    </div>
+                                </Popup>
+                            </Marker>
+                        )}
+
+                        {filteredActivities.map(activity => (
+                            <Marker
+                                key={activity.id}
+                                position={[activity.lat, activity.lng]}
+                                eventHandlers={{
+                                    click: () => handleMarkerClick(activity),
+                                }}
+                            >
+                                <Popup>
+                                    <div style={{ width: '200px' }}>
+                                        <h3 style={{ fontWeight: '600', marginBottom: '0.5rem' }}>{activity.name}</h3>
+                                        <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>{activity.description}</p>
+
+                                        <p style={{ fontWeight: '700', color: 'var(--primary)', marginBottom: '0.5rem' }}>
+                                            {activity.price === 0 ? 'Kostenlos' : `€${activity.price}`}
+                                        </p>
+
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                            <button
+                                                onClick={() => handleShowRoute(activity)}
+                                                style={{ width: '100%', padding: '0.5rem', fontSize: '0.8rem', background: 'white', border: '1px solid var(--primary)', color: 'var(--primary)', borderRadius: 'var(--radius)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.25rem' }}
+                                            >
+                                                <Navigation size={14} /> Route anzeigen
+                                            </button>
+                                            <button
+                                                onClick={() => handleAddActivity(activity)}
+                                                className="btn btn-primary"
+                                                style={{ width: '100%', padding: '0.5rem', fontSize: '0.8rem' }}
+                                            >
+                                                Hinzufügen
+                                            </button>
+                                        </div>
+                                    </div>
+                                </Popup>
+                            </Marker>
+                        ))}
+                    </MapContainer>
                 </div>
             </div>
 
